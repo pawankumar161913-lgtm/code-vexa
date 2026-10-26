@@ -278,7 +278,7 @@ export const PRICING_TIERS = [
       'Saved history across devices',
       'Priority queue during peak load',
     ],
-    cta: 'Join the Pro waitlist',
+    cta: 'See how payment works',
     to: '/pricing',
     highlight: true,
   },

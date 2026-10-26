@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, Bug, CheckCircle2, Info, Mail, ShieldCheck } from 'lucide-react'
 import { useSeo } from '../lib/seo'
+import { CopyButton } from '../components/CopyButton'
 import { PRICING_TIERS } from './Landing'
 
 function PageShell({
@@ -127,8 +128,13 @@ export function Terms() {
       </Block>
       <Block title="Pricing">
         <p>
-          The tiers shown on the pricing page are example values for a product in development. No payment is collected
-          and no paid feature is gated behind a purchase in this build.
+          The tiers shown on the pricing page are example values for a product in development. No paid feature is gated
+          behind a purchase in this build, and no checkout exists.
+        </p>
+        <p>
+          A UPI number is published on the pricing page for manual, voluntary payments. Transfers made to it are
+          peer-to-peer payments to its owner, not purchases from a company: they carry no automatic access, no
+          automated invoice and no guaranteed refund. Confirm any payment by email before relying on it.
         </p>
       </Block>
       <Block title="Changes">
@@ -137,6 +143,33 @@ export function Terms() {
     </PageShell>
   )
 }
+
+/** The operator's UPI number. Override at build time with VITE_UPI_ID if needed. */
+const UPI_ID = (import.meta.env.VITE_UPI_ID as string | undefined) || '9466825395'
+
+const PAYMENT_METHODS = [
+  {
+    name: 'UPI (manual)',
+    status: 'Unverified',
+    detail:
+      'Send a transfer, then email the reference number for manual confirmation. Nothing on this site verifies or confirms a UPI payment automatically.',
+    tone: 'info' as const,
+  },
+  {
+    name: 'Card / international',
+    status: 'Not connected',
+    detail:
+      'Needs a payment provider such as Stripe or Razorpay with server-side webhook verification before any plan can be sold.',
+    tone: 'warn' as const,
+  },
+  {
+    name: 'Bank transfer',
+    status: 'Manual',
+    detail:
+      'For Team plans only, arranged directly by email. Invoices are issued by hand.',
+    tone: 'info' as const,
+  },
+]
 
 export function Pricing() {
   useSeo({
@@ -177,6 +210,75 @@ export function Pricing() {
             </Link>
           </div>
         ))}
+      </div>
+
+      <div className="panel mt-8 px-5 py-4">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h2 className="text-sm font-semibold text-white">Pay by UPI</h2>
+            <p className="mt-1 max-w-xl text-sm leading-relaxed text-slate-400">
+              Manual UPI payment to the number below. Nothing is activated automatically: after paying, email the
+              reference number and it is confirmed by hand.
+            </p>
+          </div>
+          <span className="rounded-full border border-amber-400/30 bg-amber-500/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-amber-300">
+            Manual · not verified
+          </span>
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-white/[0.08] bg-ink-950/60 px-4 py-3">
+          <span className="font-mono text-lg tracking-wide text-white">{UPI_ID}</span>
+          <CopyButton value={UPI_ID} label="Copy UPI number" small />
+        </div>
+
+        <ol className="mt-4 space-y-1.5 text-[13px] text-slate-400">
+          <li>1. Open any UPI app and send the amount for the tier you want.</li>
+          <li>2. Note the 12-digit UPI reference (UTR) from the payment screen.</li>
+          <li>
+            3. Email it to{' '}
+            <a href="mailto:hello@example.com" className="link">
+              hello@example.com
+            </a>{' '}
+            so the payment can be matched and confirmed.
+          </li>
+        </ol>
+
+        <p className="mt-3 flex items-start gap-1.5 text-xs text-amber-200/80">
+          <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+          Sending money to this number is a direct transfer to its owner, not a purchase from a company. There is no
+          refund process, no invoice automation and no verification until someone replies to your email. Never share a
+          UPI PIN or OTP — no legitimate payment ever needs them.
+        </p>
+      </div>
+
+      <div className="panel mt-8 px-5 py-4">
+        <h2 className="text-sm font-semibold text-white">Payment</h2>
+        <p className="mt-1 text-sm leading-relaxed text-slate-400">
+          No payment method is live yet. This table is the honest status of each option; nothing here can charge you
+          today.
+        </p>
+        <ul className="mt-4 space-y-2.5">
+          {PAYMENT_METHODS.map((m) => (
+            <li key={m.name} className="flex flex-wrap items-start gap-2 rounded-lg border border-white/[0.06] bg-ink-950/50 px-3 py-2.5">
+              <span className="w-40 shrink-0 text-[13px] font-medium text-slate-100">{m.name}</span>
+              <span
+                className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
+                  m.tone === 'warn'
+                    ? 'border-amber-400/30 bg-amber-500/10 text-amber-300'
+                    : 'border-electric-400/30 bg-electric-500/10 text-electric-300'
+                }`}
+              >
+                {m.status}
+              </span>
+              <span className="w-full text-[12px] leading-relaxed text-slate-400 sm:w-auto sm:flex-1">{m.detail}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-4 text-xs text-slate-500">
+          To accept UPI properly, add a payment gateway (Razorpay or Cashfree support UPI and verify the transfer
+          server-side), then enable a paid tier here. Never type a UPI PIN, card number or OTP into this site — Code Vexa
+          will never ask for one.
+        </p>
       </div>
 
       <div className="panel mt-8 flex items-start gap-3 px-5 py-4">
@@ -288,6 +390,15 @@ AI_API_KEY=your-free-key-here
         <p className="text-xs text-slate-500">
           Locally that means a <code className="font-mono">.env</code> file next to <code className="font-mono">netlify.toml</code>; on Netlify it means
           Site configuration → Environment variables. The README has the exact commands.
+        </p>
+      </Block>
+      <Block title="Paying by UPI">
+        <p>
+          The UPI number and the exact steps are on the{' '}
+          <Link to="/pricing" className="link">
+            pricing page
+          </Link>
+          . After sending a transfer, email the 12-digit reference number so it can be matched and confirmed.
         </p>
       </Block>
       <Block title="Security">
