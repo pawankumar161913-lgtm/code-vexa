@@ -257,10 +257,11 @@ export const PROVIDER_PRESETS = {
   gemini: {
     label: 'Google Gemini',
     baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai',
-    defaultModel: 'gemini-2.5-flash',
+    defaultModel: 'gemini-flash-lite-latest',
     responseFormat: 'json_object',
     authMode: 'bearer',
-    freeTier: 'Free key at aistudio.google.com — generous per-minute limits; daily caps vary by model.',
+    freeTier:
+      'Free key at aistudio.google.com — generous per-minute limits; daily caps vary by model. The full "flash" models think before answering (60-160s), so the default is flash-lite for fast structured JSON.',
   },
   openrouter: {
     label: 'OpenRouter',

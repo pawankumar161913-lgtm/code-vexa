@@ -121,7 +121,7 @@ variables. The backend asks for JSON output and falls back automatically if a pr
 | `AI_PROVIDER` | Free key | Default `AI_MODEL` | Typical free limits |
 | --- | --- | --- | --- |
 | `groq` | <https://console.groq.com/keys> | `llama-3.3-70b-versatile` | ~30 req/min, ~1,000 req/day on the 70B model |
-| `gemini` | <https://aistudio.google.com/apikey> | `gemini-2.5-flash` | generous per-minute limits; daily caps vary by model |
+| `gemini` | <https://aistudio.google.com/apikey> | `gemini-flash-lite-latest` | generous per-minute limits; daily caps vary by model |
 | `openrouter` | <https://openrouter.ai/keys> | `meta-llama/llama-3.3-70b-instruct:free` | free models only (`:free` suffix), lower rate limits |
 | `cerebras` | <https://cloud.cerebras.ai/> | `llama-3.3-70b` | fast inference, daily token limit |
 | `ollama` | none — runs locally | `llama3.2` | limited only by your machine |
