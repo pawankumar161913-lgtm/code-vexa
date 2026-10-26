@@ -8,3 +8,7 @@ dist-ssr
 *.local
 .DS_Store
 npm-debug.log*
+
+# Firebase Functions
+functions/node_modules
+.firebase

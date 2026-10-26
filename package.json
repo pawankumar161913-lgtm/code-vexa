@@ -11,7 +11,11 @@
     "typecheck": "tsc -b --noEmit",
     "netlify:dev": "netlify dev",
     "deploy": "netlify deploy --build --prod",
-    "serve": "node server/dev.mjs"
+    "serve": "node server/dev.mjs",
+    "serve:live": "node --env-file=.env server/dev.mjs",
+    "firebase:login": "firebase login",
+    "firebase:deploy": "npm run build && firebase deploy --only hosting,functions",
+    "firebase:secrets": "firebase functions:secrets:set AI_API_KEY"
   },
   "dependencies": {
     "diff": "^5.2.0",
@@ -27,6 +31,7 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",
+    "firebase-tools": "^13.35.1",
     "postcss": "^8.4.41",
     "tailwindcss": "^3.4.10",
     "typescript": "^5.5.4",
