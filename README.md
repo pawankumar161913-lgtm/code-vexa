@@ -98,9 +98,9 @@ Copy `.env.example` to `.env` (gitignored) for local runs, and set the same keys
 
 | Variable | Required | Purpose |
 | --- | --- | --- |
-| `AI_PROVIDER` | yes | `openai` (default), `anthropic`, or `custom` |
+| `AI_PROVIDER` | yes | Free-key presets `groq` (default in `.env.example`), `gemini`, `openrouter`, `cerebras`, `ollama`; paid `openai`, `anthropic`; or `custom` |
 | `AI_API_KEY` | for live mode | Provider secret. **Server only.** |
-| `AI_MODEL` | yes | e.g. `gpt-4o-mini`, `claude-3-5-sonnet-latest`, `llama-3.3-70b-versatile` |
+| `AI_MODEL` | no | Optional override; each preset has a working default (see the table in section 3b) |
 | `AI_BASE_URL` | for `custom` | OpenAI-compatible base URL, e.g. `https://api.groq.com/openai/v1` |
 | `AI_TIMEOUT_MS` | no | Upstream timeout, default `45000` |
 | `RATE_LIMIT_MAX` | no | Requests per IP per window, default `12` |
@@ -109,6 +109,44 @@ Copy `.env.example` to `.env` (gitignored) for local runs, and set the same keys
 | `MAX_BODY_BYTES` | no | Hard body cap, default `200000` |
 | `ALLOWED_ORIGINS` | no | Comma-separated extra origins allowed to call the API |
 | `VITE_SITE_URL` | no | Public site URL used for canonical links (build-time, non-secret) |
+
+### 3b. Free API keys (no credit card)
+
+Every preset below speaks the OpenAI chat-completions protocol, so switching is two environment
+variables. The backend asks for JSON output and falls back automatically if a provider rejects
+`response_format`.
+
+| `AI_PROVIDER` | Free key | Default `AI_MODEL` | Typical free limits |
+| --- | --- | --- | --- |
+| `groq` | <https://console.groq.com/keys> | `llama-3.3-70b-versatile` | ~30 req/min, ~1,000 req/day on the 70B model |
+| `gemini` | <https://aistudio.google.com/apikey> | `gemini-2.5-flash` | generous per-minute limits; daily caps vary by model |
+| `openrouter` | <https://openrouter.ai/keys> | `meta-llama/llama-3.3-70b-instruct:free` | free models only (`:free` suffix), lower rate limits |
+| `cerebras` | <https://cloud.cerebras.ai/> | `llama-3.3-70b` | fast inference, daily token limit |
+| `ollama` | none — runs locally | `llama3.2` | limited only by your machine |
+
+Local setup, Groq as the example:
+
+```bash
+cp .env.example .env
+# put your key in .env:  AI_PROVIDER=groq  and  AI_API_KEY=gsk_...
+npm run build && npm run serve      # workspace badge switches to "Live AI mode · groq"
+```
+
+Netlify:
+
+```bash
+netlify env:set AI_PROVIDER groq
+netlify env:set AI_API_KEY "gsk_..."     # never commit this
+netlify deploy --build --prod
+```
+
+With Ollama, also run `ollama serve` and `ollama pull llama3.2`, then
+`netlify env:set AI_PROVIDER ollama`. That only works when the backend can reach your machine, so
+it is for local use — not for a deployed site.
+
+Free tiers are rate-limited: if you hit `429 provider_rate_limited`, wait a minute, lower
+`RATE_LIMIT_MAX`, or switch provider. Model names change over time — set `AI_MODEL` if a default
+is retired.
 
 **Never** rename the key to `VITE_AI_API_KEY`: Vite inlines `VITE_*` variables into the browser
 bundle, which would publish the secret to every visitor. The backend reads `AI_API_KEY` from

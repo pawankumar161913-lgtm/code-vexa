@@ -199,6 +199,39 @@ export function Pricing() {
   )
 }
 
+const FREE_PROVIDERS = [
+  {
+    name: 'Groq',
+    url: 'https://console.groq.com/keys',
+    model: 'llama-3.3-70b-versatile',
+    note: 'Fastest option. Free key, about 30 requests/min and ~1,000 requests/day on the 70B model.',
+  },
+  {
+    name: 'Google Gemini',
+    url: 'https://aistudio.google.com/apikey',
+    model: 'gemini-2.5-flash',
+    note: 'Free key from AI Studio. Generous per-minute limits; daily caps vary by model.',
+  },
+  {
+    name: 'OpenRouter',
+    url: 'https://openrouter.ai/keys',
+    model: 'meta-llama/llama-3.3-70b-instruct:free',
+    note: 'One key for many models. Use a model whose name ends in “:free” so nothing is billed.',
+  },
+  {
+    name: 'Cerebras',
+    url: 'https://cloud.cerebras.ai/',
+    model: 'llama-3.3-70b',
+    note: 'Very fast inference on a free tier with daily token limits.',
+  },
+  {
+    name: 'Ollama (local)',
+    url: 'https://ollama.com/download',
+    model: 'llama3.2',
+    note: 'No key at all — runs on your own machine. Slower, and only while your machine is on.',
+  },
+]
+
 export function Contact() {
   useSeo({
     title: 'Contact — AI Bug Detective',
@@ -226,6 +259,35 @@ export function Contact() {
         <p>
           The fastest path is to re-run the analysis with the full error message and a stack trace included. If it still
           looks wrong, send us the input and the analysis you got — that is the most useful bug report we can receive.
+        </p>
+      </Block>
+      <Block title="Use a free API key">
+        <p>
+          The app ships in demo mode until a server-side AI key is configured. These providers give you a free key, and
+          the backend already has a preset for each one — you only set two environment variables.
+        </p>
+        <ul className="mt-1 space-y-2.5">
+          {FREE_PROVIDERS.map((p) => (
+            <li key={p.name} className="rounded-lg border border-white/[0.06] bg-ink-950/50 px-3 py-2.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <a href={p.url} target="_blank" rel="noreferrer noopener" className="text-[13px] font-semibold text-slate-100 hover:text-white">
+                  {p.name}
+                </a>
+                <code className="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-[11px] text-electric-300">{p.model}</code>
+              </div>
+              <p className="mt-1 text-[12px] leading-relaxed text-slate-400">{p.note}</p>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-3">Then set, on the server (never in the browser bundle):</p>
+        <pre className="overflow-x-auto rounded-lg bg-ink-950/80 p-3 font-mono text-[11.5px] leading-5 text-slate-300">
+{`AI_PROVIDER=groq
+AI_API_KEY=your-free-key-here
+# AI_MODEL=llama-3.3-70b-versatile   (optional override)`}
+        </pre>
+        <p className="text-xs text-slate-500">
+          Locally that means a <code className="font-mono">.env</code> file next to <code className="font-mono">netlify.toml</code>; on Netlify it means
+          Site configuration → Environment variables. The README has the exact commands.
         </p>
       </Block>
       <Block title="Security">

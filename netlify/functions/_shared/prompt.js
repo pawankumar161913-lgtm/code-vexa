@@ -32,7 +32,33 @@ Hard rules:
 10. relatedRisks: other plausible defects visible in the code (null references, off-by-one, incorrect conditions, unvalidated input, SQL injection, resource leaks). Only list what the code actually shows.
 11. severity: critical (data loss, security breach, crash in production paths), high (broken core behaviour), medium (edge-case failure or degraded behaviour), low (style, minor robustness). severityReason explains the choice in one sentence.
 12. confidence is a number from 0 to 1; confidenceReason explains what limits certainty. Never claim certainty from insufficient evidence.
-13. Be concise. No markdown fences inside JSON string fields. Never output anything except the structured object.`
+13. Be concise. No markdown fences inside JSON string fields. Never output anything except the structured object.
+
+Output shape (exactly these keys, camelCase, no extra keys):
+{
+  "status": "analyzed" | "needs_more_context",
+  "summary": string,
+  "severity": "critical" | "high" | "medium" | "low",
+  "severityReason": string,
+  "category": "syntax_error" | "logic_error" | "runtime_error" | "type_error" | "security" | "performance" | "improvement",
+  "cause": string,
+  "locationFile": string | null,
+  "locationLine": number | null,
+  "locationReliable": boolean,
+  "originalCode": string,
+  "suggestedFix": string,
+  "explanationSteps": string[],
+  "preventionTips": string[],
+  "confidence": number (0-1),
+  "confidenceReason": string,
+  "beginnerExplanation": string,
+  "minimalRepro": string,
+  "unitTests": string,
+  "relatedRisks": [{ "kind": "null_reference" | "incorrect_condition" | "runtime" | "security" | "performance" | "style", "description": string, "line": number | null }],
+  "missingContext": string[]
+}
+
+For "locationLine" and "relatedRisks[].line" use null when no line can be derived; never guess.`
 
 export function buildUserPrompt({ language, code, errorMessage, description, fileName }) {
   const label = LANGUAGE_LABEL[language] || language

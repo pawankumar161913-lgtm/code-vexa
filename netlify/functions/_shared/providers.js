@@ -83,8 +83,29 @@ async function readError(res) {
   return detail
 }
 
-async function callOpenAICompatible({ baseUrl, apiKey, model, system, user, timeoutMs, extraHeaders = {} }) {
-  const url = `${baseUrl.replace(/\/$/, '')}/chat/completions`
+async function callOpenAICompatible({
+  baseUrl,
+  apiKey,
+  model,
+  system,
+  user,
+  timeoutMs,
+  extraHeaders = {},
+  /** 'bearer' | 'x-goog-api-key' | 'x-api-key' */
+  authMode = 'bearer',
+  /** 'json_schema' (OpenAI) | 'json_object' (most free tiers) | 'none' */
+  responseFormat = 'json_schema',
+  /** Gemini requires the key in the URL as well as the header on some gateways. */
+  apiKeyInQuery = false,
+  extraBody = {},
+}) {
+  const base = baseUrl.replace(/\/$/, '')
+  const url = apiKeyInQuery ? `${base}/chat/completions?key=${encodeURIComponent(apiKey)}` : `${base}/chat/completions`
+
+  const authHeaders = {}
+  if (authMode === 'x-goog-api-key') authHeaders['x-goog-api-key'] = apiKey
+  else if (authMode === 'x-api-key') authHeaders['x-api-key'] = apiKey
+  else authHeaders.Authorization = `Bearer ${apiKey}`
   const messages = [
     { role: 'system', content: system },
     { role: 'user', content: user },
@@ -98,7 +119,7 @@ async function callOpenAICompatible({ baseUrl, apiKey, model, system, user, time
         signal,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${apiKey}`,
+          ...authHeaders,
           ...extraHeaders,
         },
         body: JSON.stringify(body),
@@ -119,15 +140,23 @@ async function callOpenAICompatible({ baseUrl, apiKey, model, system, user, time
     }
   }
 
-  // First attempt: strict JSON-schema output.
+  const jsonSchemaFormat =
+    responseFormat === 'json_schema'
+      ? {
+          type: 'json_schema',
+          json_schema: { name: 'bug_analysis', strict: true, schema: ANALYSIS_JSON_SCHEMA },
+        }
+      : responseFormat === 'json_object'
+        ? { type: 'json_object' }
+        : undefined
+
+  // First attempt: the provider's best supported structured-output mode.
   const strictBody = {
     model,
     temperature: 0.1,
     max_tokens: 3000,
-    response_format: {
-      type: 'json_schema',
-      json_schema: { name: 'bug_analysis', strict: true, schema: ANALYSIS_JSON_SCHEMA },
-    },
+    ...(jsonSchemaFormat ? { response_format: jsonSchemaFormat } : {}),
+    ...extraBody,
     messages,
   }
 
@@ -208,8 +237,59 @@ async function callAnthropic({ apiKey, model, system, user, timeoutMs }) {
   }
 }
 
+/**
+ * Presets for providers that hand out free API keys. Selected with
+ * AI_PROVIDER=groq | gemini | openrouter | cerebras | ollama (or use "custom"
+ * and set AI_BASE_URL yourself). All of them speak the OpenAI chat-completions
+ * protocol, which is why one adapter covers them.
+ *
+ * Model names change over time; AI_MODEL always overrides the default below, so
+ * check the provider's model list if a preset stops working.
+ */
+export const PROVIDER_PRESETS = {
+  groq: {
+    label: 'Groq',
+    baseUrl: 'https://api.groq.com/openai/v1',
+    defaultModel: 'llama-3.3-70b-versatile',
+    responseFormat: 'json_object',
+    freeTier: 'Free key at console.groq.com — roughly 30 requests/min, ~1,000 requests/day on the 70B model.',
+  },
+  gemini: {
+    label: 'Google Gemini',
+    baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai',
+    defaultModel: 'gemini-2.5-flash',
+    responseFormat: 'json_object',
+    authMode: 'bearer',
+    freeTier: 'Free key at aistudio.google.com — generous per-minute limits; daily caps vary by model.',
+  },
+  openrouter: {
+    label: 'OpenRouter',
+    baseUrl: 'https://openrouter.ai/api/v1',
+    defaultModel: 'meta-llama/llama-3.3-70b-instruct:free',
+    responseFormat: 'json_object',
+    extraHeaders: { 'HTTP-Referer': 'https://ai-bug-detective.netlify.app', 'X-Title': 'AI Bug Detective' },
+    freeTier: 'Free key at openrouter.ai — models with a ":free" suffix cost nothing, with lower rate limits.',
+  },
+  cerebras: {
+    label: 'Cerebras',
+    baseUrl: 'https://api.cerebras.ai/v1',
+    defaultModel: 'llama-3.3-70b',
+    responseFormat: 'json_object',
+    freeTier: 'Free key at cloud.cerebras.ai — very fast inference, daily token limits.',
+  },
+  ollama: {
+    label: 'Ollama (local, no key)',
+    baseUrl: 'http://localhost:11434/v1',
+    defaultModel: 'llama3.2',
+    responseFormat: 'json_object',
+    authMode: 'none',
+    freeTier: 'Runs entirely on your machine — no key, no cost, no rate limit.',
+  },
+}
+
 /** Returns true when server-side AI credentials are configured. */
 export function isAiConfigured() {
+  if (providerName() === 'ollama') return true // local models need no key
   return Boolean(process.env.AI_API_KEY && process.env.AI_API_KEY !== 'your_api_key_here')
 }
 
@@ -227,8 +307,12 @@ export async function runAnalysis({ system, user }) {
   }
 
   const provider = providerName()
-  const apiKey = process.env.AI_API_KEY
-  const model = process.env.AI_MODEL || (provider === 'anthropic' ? 'claude-3-5-sonnet-latest' : 'gpt-4o-mini')
+  const preset = PROVIDER_PRESETS[provider]
+  const apiKey = process.env.AI_API_KEY || (preset?.authMode === 'none' ? 'local' : '')
+  const model =
+    process.env.AI_MODEL ||
+    preset?.defaultModel ||
+    (provider === 'anthropic' ? 'claude-3-5-sonnet-latest' : 'gpt-4o-mini')
   const timeoutMs = Number(process.env.AI_TIMEOUT_MS || 45000)
 
   if (!model) {
@@ -238,6 +322,18 @@ export async function runAnalysis({ system, user }) {
   let raw
   if (provider === 'anthropic') {
     raw = await callAnthropic({ apiKey, model, system, user, timeoutMs })
+  } else if (preset) {
+    raw = await callOpenAICompatible({
+      baseUrl: process.env.AI_BASE_URL || preset.baseUrl,
+      apiKey,
+      model,
+      system,
+      user,
+      timeoutMs,
+      authMode: preset.authMode || 'bearer',
+      responseFormat: preset.responseFormat || 'json_object',
+      extraHeaders: preset.extraHeaders,
+    })
   } else if (provider === 'custom') {
     const baseUrl = process.env.AI_BASE_URL
     if (!baseUrl) throw new ProviderError('AI_BASE_URL is required for AI_PROVIDER=custom.', 500, 'misconfigured')

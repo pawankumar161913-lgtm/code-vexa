@@ -135,6 +135,7 @@ export async function handler(event) {
       service: 'ai-bug-detective',
       aiConfigured: isAiConfigured(),
       provider: isAiConfigured() ? providerName() : null,
+      model: isAiConfigured() ? process.env.AI_MODEL || null : null,
       languages: LANGUAGES,
       limits: LIMITS,
     })

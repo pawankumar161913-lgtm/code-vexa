@@ -82,8 +82,9 @@ export function HowItWorksPage() {
           </span>
           <h2 className="mt-3.5 text-sm font-semibold text-white">Model configuration</h2>
           <p className="mt-2 text-[13px] leading-relaxed text-slate-400">
-            The provider and model are chosen by the operator with server-side environment variables. Supported
-            adapters: OpenAI, Anthropic, and any OpenAI-compatible endpoint (Groq, Together, OpenRouter, a local model).
+            The provider and model are chosen by the operator with server-side environment variables. Free-key presets
+            ship for Groq, Google Gemini, OpenRouter, Cerebras and a local Ollama model; paid OpenAI and Anthropic keys
+            and any other OpenAI-compatible endpoint work too.
           </p>
         </div>
       </div>
