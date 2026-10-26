@@ -145,7 +145,7 @@ export function Terms() {
 }
 
 /** Where payments and enquiries are reported. Override with VITE_CONTACT_EMAIL. */
-const CONTACT_EMAIL = (import.meta.env.VITE_CONTACT_EMAIL as string | undefined) || 'p23988087@gmail.com'
+const CONTACT_EMAIL = (import.meta.env.VITE_CONTACT_EMAIL as string | undefined) || 'pawankumar161913@gmail.com'
 
 /** The operator's UPI number. Override at build time with VITE_UPI_ID if needed. */
 const UPI_ID = (import.meta.env.VITE_UPI_ID as string | undefined) || '9466825395'

@@ -111,7 +111,7 @@ Copy `.env.example` to `.env` (gitignored) for local runs, and set the same keys
 | `MAX_BODY_BYTES` | no | Hard body cap, default `200000` |
 | `ALLOWED_ORIGINS` | no | Comma-separated extra origins allowed to call the API |
 | `VITE_SITE_URL` | no | Public site URL used for canonical links (build-time, non-secret) |
-| `VITE_CONTACT_EMAIL` | no | Public contact address shown on the contact/pricing pages (default `p23988087@gmail.com`) |
+| `VITE_CONTACT_EMAIL` | no | Public contact address shown on the contact/pricing pages (default `pawankumar161913@gmail.com`) |
 | `VITE_UPI_ID` | no | UPI number shown on the pricing page (default `9466825395`). Public by design — manual payments only, no gateway and no automatic verification |
 
 ### 3b. Free API keys (no credit card)
