@@ -1,0 +1,10 @@
+{
+  "name": "AI Bug Detective",
+  "short_name": "Bug Detective",
+  "description": "Find the bug. Understand the cause. Fix it faster.",
+  "start_url": "/workspace",
+  "display": "standalone",
+  "background_color": "#070A12",
+  "theme_color": "#070A12",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#070A12"/>
+      <stop offset="100%" stop-color="#101a33"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#38A6FF"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="6" fill="url(#accent)"/>
+  <text x="80" y="250" font-family="Inter, Segoe UI, sans-serif" font-size="64" font-weight="700" fill="#E8EEFB">AI Bug Detective</text>
+  <text x="80" y="320" font-family="Inter, Segoe UI, sans-serif" font-size="34" fill="#9FB0CC">Find the bug. Understand the cause. Fix it faster.</text>
+  <text x="80" y="420" font-family="JetBrains Mono, monospace" font-size="26" fill="#7CC4FF">TypeError: Cannot read properties of undefined (reading 'map')</text>
+  <text x="80" y="470" font-family="JetBrains Mono, monospace" font-size="26" fill="#A78BFA">Likely cause: response.items is undefined for empty responses</text>
+  <circle cx="1020" cy="200" r="110" fill="none" stroke="url(#accent)" stroke-width="14"/>
+  <path d="M1100 280 L1170 350" stroke="url(#accent)" stroke-width="18" stroke-linecap="round"/>
+</svg>

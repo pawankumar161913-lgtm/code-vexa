@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /workspace
+Disallow: /history
+Disallow: /api/
+
+Sitemap: https://ai-bug-detective.netlify.app/sitemap.xml
