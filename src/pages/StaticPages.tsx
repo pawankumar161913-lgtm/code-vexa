@@ -144,6 +144,9 @@ export function Terms() {
   )
 }
 
+/** Where payments and enquiries are reported. Override with VITE_CONTACT_EMAIL. */
+const CONTACT_EMAIL = (import.meta.env.VITE_CONTACT_EMAIL as string | undefined) || 'p23988087@gmail.com'
+
 /** The operator's UPI number. Override at build time with VITE_UPI_ID if needed. */
 const UPI_ID = (import.meta.env.VITE_UPI_ID as string | undefined) || '9466825395'
 
@@ -236,8 +239,8 @@ export function Pricing() {
           <li>2. Note the 12-digit UPI reference (UTR) from the payment screen.</li>
           <li>
             3. Email it to{' '}
-            <a href="mailto:hello@example.com" className="link">
-              hello@example.com
+            <a href={`mailto:${CONTACT_EMAIL}`} className="link">
+              {CONTACT_EMAIL}
             </a>{' '}
             so the payment can be matched and confirmed.
           </li>
@@ -348,13 +351,13 @@ export function Contact() {
       <Block title="Email">
         <p className="flex items-center gap-2">
           <Mail className="h-4 w-4 text-electric-300" aria-hidden="true" />
-          <a href="mailto:hello@example.com" className="link">
-            hello@example.com
+          <a href={`mailto:${CONTACT_EMAIL}`} className="link">
+            {CONTACT_EMAIL}
           </a>
         </p>
         <p className="text-xs text-slate-500">
-          This is a placeholder address in the example deployment. Replace it with your real support address before
-          launch.
+          Payments, bug reports and Team enquiries all go to this address. It is a personal inbox, so please do not send
+          credentials or unredacted production code.
         </p>
       </Block>
       <Block title="Found a problem with an analysis?">
