@@ -333,6 +333,53 @@ netlify deploy --build --prod
 
 ---
 
+## 9b. Deploy to Google (Firebase Hosting + Functions)
+
+The repo already contains the Firebase target: `firebase.json`, `.firebaserc`,
+`functions/index.js` (a thin adapter around the same `netlify/functions/api.js` handler, so
+validation, rate limiting and the AI logic behave identically) and the npm scripts below.
+
+```bash
+# 1. sign in with the Google account that should own the project
+npx firebase login
+
+# 2. create the project (or use an existing one) and point .firebaserc at it
+npx firebase projects:create code-vexa          # skip if it already exists
+# edit .firebaserc -> "default": "your-project-id"
+
+# 3. enable the services the deploy needs (Blaze plan required for functions)
+#    https://console.firebase.google.com/project/_/usage/details
+
+# 4. store the AI key as a secret — it never touches the repo
+npx firebase functions:secrets:set AI_API_KEY   # paste the Gemini key when prompted
+npx firebase functions:secrets:access AI_API_KEY
+
+# 5. non-secret config: set these in functions/index.js defaults or as env params
+#    AI_PROVIDER=gemini   AI_MODEL=gemini-flash-lite-latest
+
+# 6. build and deploy hosting + functions
+npm run firebase:deploy
+
+# the site lands at https://<project-id>.web.app and the API at /api/analyze
+```
+
+Notes:
+
+- **Blaze plan required.** Firebase Functions (Cloud Functions gen 2) needs billing enabled;
+  the free *Spark* plan only hosts static files. Usage for a low-traffic site stays inside the
+  free monthly allowances, but a card must be on file.
+- **Region.** `us-central1` is set in `functions/index.js`. Change it there *and* in the hosting
+  rewrite if you need another region.
+- **Secrets, not env vars.** `AI_API_KEY` is declared with `defineSecret`, so it is injected at
+  runtime only. Other settings can be added the same way or with
+  `firebase functions:config:set`.
+- **Two hosting options, one codebase.** Netlify (`netlify.toml`) and Firebase (`firebase.json`)
+  both work from the same repo; deploy to whichever you prefer, or both.
+- **Emulator:** `npx firebase emulators:start` serves the built site on :5000 with the function
+  emulated on :5001 — useful for testing the API without deploying.
+
+---
+
 ## 10. Verification checklist
 
 ```bash
