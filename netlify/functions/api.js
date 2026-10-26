@@ -10,7 +10,13 @@
  *  - source code is not logged; only non-sensitive metadata is.
  */
 import { LANGUAGES, LIMITS, normalizeAnalysis } from './_shared/schema.js'
-import { runAnalysis, isAiConfigured, providerName, ProviderError } from './_shared/providers.js'
+import {
+  runAnalysis,
+  isAiConfigured,
+  providerName,
+  ProviderError,
+  PROVIDER_PRESETS,
+} from './_shared/providers.js'
 import { SYSTEM_PROMPT, buildUserPrompt } from './_shared/prompt.js'
 import { findDemoAnalysis } from './_shared/demo.js'
 
@@ -135,7 +141,9 @@ export async function handler(event) {
       service: 'ai-bug-detective',
       aiConfigured: isAiConfigured(),
       provider: isAiConfigured() ? providerName() : null,
-      model: isAiConfigured() ? process.env.AI_MODEL || null : null,
+      model: isAiConfigured()
+        ? process.env.AI_MODEL || PROVIDER_PRESETS[providerName()]?.defaultModel || null
+        : null,
       languages: LANGUAGES,
       limits: LIMITS,
     })
@@ -224,7 +232,7 @@ export async function handler(event) {
       ok: true,
       mode: 'live',
       provider: providerName(),
-      model: process.env.AI_MODEL || null,
+      model: process.env.AI_MODEL || PROVIDER_PRESETS[providerName()]?.defaultModel || null,
       analysis: normalizeAnalysis(raw),
       meta: { language: value.language, durationMs: Date.now() - started, rateRemaining: rl.remaining },
     })
