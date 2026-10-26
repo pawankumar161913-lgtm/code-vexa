@@ -321,7 +321,49 @@ curl -s -X POST http://localhost:4173/api/analyze -H 'Content-Type: application/
 
 ---
 
-## 12. License and content honesty
+## 12. Exact commands (copy/paste)
+
+```bash
+# 1. install
+cd ai-bug-detective
+npm install
+
+# 2. develop (Vite on :5173, function via Netlify CLI on :8888)
+npx netlify-cli dev
+
+# 2b. or run the built app + real function on :4173 with no extra tooling
+npm run build
+npm run serve
+
+# 3. type-check + production build  → dist/
+npm run typecheck
+npm run build
+
+# 4. deploy to Netlify
+npm install -g netlify-cli
+netlify login
+netlify init
+netlify env:set AI_PROVIDER openai
+netlify env:set AI_API_KEY "sk-..."       # real key, server-side only
+netlify env:set AI_MODEL gpt-4o-mini
+netlify deploy --build --prod
+```
+
+---
+
+## 13. What needs external credentials or services
+
+| Capability | Needs |
+| --- | --- |
+| Live AI analysis of arbitrary code | `AI_API_KEY` (+ `AI_PROVIDER`, `AI_MODEL`) in the server environment |
+| Sample-bug walkthroughs, validation, rate limiting, history, SEO | Nothing — works as shipped |
+| Accounts / cross-device history | An auth provider and a database (not implemented) |
+| Payments | A payment provider with server-side verification (not implemented) |
+| Hard, cross-instance rate limits | Netlify or Cloudflare rate limiting in front of `/api/*` (the built-in window is per instance) |
+
+---
+
+## 14. Content honesty
 
 Example prices, usage limits and the contact address are placeholders for a product in development;
 they are labelled as such in the UI and are configurable. There are no fabricated statistics,
