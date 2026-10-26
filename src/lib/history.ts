@@ -1,6 +1,6 @@
 import type { HistoryEntry } from './types'
 
-const KEY = 'abd:history:v1'
+const KEY = 'cvx:history:v1'
 const MAX_ENTRIES = 50
 
 function read(): HistoryEntry[] {

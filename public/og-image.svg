@@ -11,7 +11,7 @@
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
   <rect x="0" y="0" width="1200" height="6" fill="url(#accent)"/>
-  <text x="80" y="250" font-family="Inter, Segoe UI, sans-serif" font-size="64" font-weight="700" fill="#E8EEFB">AI Bug Detective</text>
+  <text x="80" y="250" font-family="Inter, Segoe UI, sans-serif" font-size="64" font-weight="700" fill="#E8EEFB">Code Vexa</text>
   <text x="80" y="320" font-family="Inter, Segoe UI, sans-serif" font-size="34" fill="#9FB0CC">Find the bug. Understand the cause. Fix it faster.</text>
   <text x="80" y="420" font-family="JetBrains Mono, monospace" font-size="26" fill="#7CC4FF">TypeError: Cannot read properties of undefined (reading 'map')</text>
   <text x="80" y="470" font-family="JetBrains Mono, monospace" font-size="26" fill="#A78BFA">Likely cause: response.items is undefined for empty responses</text>

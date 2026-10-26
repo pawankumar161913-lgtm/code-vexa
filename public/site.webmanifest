@@ -1,6 +1,6 @@
 {
-  "name": "AI Bug Detective",
-  "short_name": "Bug Detective",
+  "name": "Code Vexa",
+  "short_name": "Code Vexa",
   "description": "Find the bug. Understand the cause. Fix it faster.",
   "start_url": "/workspace",
   "display": "standalone",

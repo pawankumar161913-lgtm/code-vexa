@@ -31,7 +31,7 @@ const ALLOWED_EXT = ['js', 'jsx', 'mjs', 'cjs', 'ts', 'tsx', 'py', 'java', 'c', 
 
 export function Workspace() {
   useSeo({
-    title: 'Debugging Workspace — AI Bug Detective',
+    title: 'Debugging Workspace — Code Vexa',
     description:
       'Paste code, add an error message and get a root-cause analysis with a suggested fix, diff and explanation.',
     path: '/workspace',

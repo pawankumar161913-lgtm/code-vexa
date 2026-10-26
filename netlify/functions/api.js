@@ -138,7 +138,7 @@ export async function handler(event) {
   if (method === 'GET') {
     return json(200, {
       ok: true,
-      service: 'ai-bug-detective',
+      service: 'code-vexa',
       aiConfigured: isAiConfigured(),
       provider: isAiConfigured() ? providerName() : null,
       model: isAiConfigured()

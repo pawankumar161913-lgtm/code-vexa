@@ -104,6 +104,6 @@ const server = http.createServer(async (req, res) => {
 })
 
 server.listen(PORT, () => {
-  console.log(`AI Bug Detective dev server → http://localhost:${PORT}`)
+  console.log(`Code Vexa dev server → http://localhost:${PORT}`)
   console.log(`AI configured: ${Boolean(process.env.AI_API_KEY && process.env.AI_API_KEY !== 'your_api_key_here')}`)
 })

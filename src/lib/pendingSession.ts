@@ -1,6 +1,6 @@
 import type { HistoryEntry } from './types'
 
-const SESSION_KEY = 'abd:reopen:v1'
+const SESSION_KEY = 'cvx:reopen:v1'
 
 /** The workspace reads this on mount to reopen a session picked in History. */
 export function takePendingSession(): HistoryEntry | null {

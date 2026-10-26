@@ -36,8 +36,8 @@ function Block({ title, children }: { title: string; children: React.ReactNode }
 
 export function Privacy() {
   useSeo({
-    title: 'Privacy — AI Bug Detective',
-    description: 'How AI Bug Detective processes, stores and deletes the code you submit.',
+    title: 'Privacy — Code Vexa',
+    description: 'How Code Vexa processes, stores and deletes the code you submit.',
     path: '/privacy',
   })
   return (
@@ -97,8 +97,8 @@ export function Privacy() {
 
 export function Terms() {
   useSeo({
-    title: 'Terms of Use — AI Bug Detective',
-    description: 'The terms that apply to using AI Bug Detective.',
+    title: 'Terms of Use — Code Vexa',
+    description: 'The terms that apply to using Code Vexa.',
     path: '/terms',
   })
   return (
@@ -108,7 +108,7 @@ export function Terms() {
     >
       <Block title="The service">
         <p>
-          AI Bug Detective provides AI-assisted code analysis. Results are suggestions, not guarantees. You are
+          Code Vexa provides AI-assisted code analysis. Results are suggestions, not guarantees. You are
           responsible for reviewing any change before you ship it.
         </p>
       </Block>
@@ -140,8 +140,8 @@ export function Terms() {
 
 export function Pricing() {
   useSeo({
-    title: 'Pricing — AI Bug Detective',
-    description: 'Example Free, Pro and Team tiers for AI Bug Detective, with a clear statement of what is implemented.',
+    title: 'Pricing — Code Vexa',
+    description: 'Example Free, Pro and Team tiers for Code Vexa, with a clear statement of what is implemented.',
     path: '/pricing',
   })
   return (
@@ -234,14 +234,14 @@ const FREE_PROVIDERS = [
 
 export function Contact() {
   useSeo({
-    title: 'Contact — AI Bug Detective',
-    description: 'How to reach the team behind AI Bug Detective.',
+    title: 'Contact — Code Vexa',
+    description: 'How to reach the team behind Code Vexa.',
     path: '/contact',
   })
   return (
     <PageShell
       title="Contact"
-      intro="Questions, bug reports about the bug detective itself, or a request for a Team workspace — here is how to reach us."
+      intro="Questions, bug reports about the Code Vexa itself, or a request for a Team workspace — here is how to reach us."
     >
       <Block title="Email">
         <p className="flex items-center gap-2">
@@ -305,7 +305,7 @@ AI_API_KEY=your-free-key-here
 
 export function SignIn() {
   useSeo({
-    title: 'Sign In — AI Bug Detective',
+    title: 'Sign In — Code Vexa',
     description: 'Accounts are not implemented yet; the debugging workspace works without signing in.',
     path: '/signin',
     noindex: true,
@@ -356,7 +356,7 @@ export function SignIn() {
 
 export function NotFound() {
   useSeo({
-    title: 'Page not found — AI Bug Detective',
+    title: 'Page not found — Code Vexa',
     description: 'That page does not exist.',
     path: '/404',
     noindex: true,

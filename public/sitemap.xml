@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ai-bug-detective.netlify.app/</loc>
+    <loc>https://code-vexa.netlify.app/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://ai-bug-detective.netlify.app/features</loc>
+    <loc>https://code-vexa.netlify.app/features</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ai-bug-detective.netlify.app/how-it-works</loc>
+    <loc>https://code-vexa.netlify.app/how-it-works</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ai-bug-detective.netlify.app/pricing</loc>
+    <loc>https://code-vexa.netlify.app/pricing</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ai-bug-detective.netlify.app/workspace</loc>
+    <loc>https://code-vexa.netlify.app/workspace</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://ai-bug-detective.netlify.app/privacy</loc>
+    <loc>https://code-vexa.netlify.app/privacy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://ai-bug-detective.netlify.app/terms</loc>
+    <loc>https://code-vexa.netlify.app/terms</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

@@ -48,7 +48,7 @@ export function Footer() {
       <div className="border-t border-white/[0.06]">
         <div className="container-page flex flex-col items-start justify-between gap-4 py-6 sm:flex-row sm:items-center">
           <p className="text-xs text-slate-500">
-            © {new Date().getFullYear()} AI Bug Detective. Sample prices and limits are configurable examples.
+            © {new Date().getFullYear()} Code Vexa. Sample prices and limits are configurable examples.
           </p>
           <div className="flex items-center gap-4 text-xs text-slate-500">
             <a href={GITHUB_URL} target="_blank" rel="noreferrer noopener" className="inline-flex items-center gap-1.5 hover:text-slate-300">

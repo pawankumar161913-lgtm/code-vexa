@@ -100,7 +100,7 @@ const GROUPS = [
 
 export function FeaturesPage() {
   useSeo({
-    title: 'Features — AI Bug Detective',
+    title: 'Features — Code Vexa',
     description:
       'Root-cause analysis, stack trace parsing, diff viewer, apply-on-request fixes, beginner explanations, test suggestions and prevention tips for ten languages.',
     path: '/features',

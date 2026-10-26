@@ -267,7 +267,7 @@ export const PROVIDER_PRESETS = {
     baseUrl: 'https://openrouter.ai/api/v1',
     defaultModel: 'meta-llama/llama-3.3-70b-instruct:free',
     responseFormat: 'json_object',
-    extraHeaders: { 'HTTP-Referer': 'https://ai-bug-detective.netlify.app', 'X-Title': 'AI Bug Detective' },
+    extraHeaders: { 'HTTP-Referer': 'https://code-vexa.netlify.app', 'X-Title': 'Code Vexa' },
     freeTier: 'Free key at openrouter.ai — models with a ":free" suffix cost nothing, with lower rate limits.',
   },
   cerebras: {

@@ -7,7 +7,7 @@ interface SeoOptions {
   noindex?: boolean
 }
 
-const SITE = (import.meta.env.VITE_SITE_URL as string | undefined) || 'https://ai-bug-detective.netlify.app'
+const SITE = (import.meta.env.VITE_SITE_URL as string | undefined) || 'https://code-vexa.netlify.app'
 
 function setMeta(attr: 'name' | 'property', key: string, content: string) {
   let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`)

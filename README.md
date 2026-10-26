@@ -1,11 +1,13 @@
-# AI Bug Detective
+# Code Vexa
 
 > **Find the bug. Understand the cause. Fix it faster.**
 
-AI Bug Detective is a full-stack debugging workspace. Paste code, add the error message or stack
+Code Vexa is a full-stack debugging workspace. Paste code, add the error message or stack
 trace, and get a structured analysis: the suspected cause, severity, the bug location (only when it
 can be determined), the original snippet, a suggested fix shown as a diff, a step-by-step
 explanation, prevention tips and a qualified confidence score.
+
+**Stack**
 
 - **Frontend:** React 18 + Vite + TypeScript + Tailwind CSS + Lucide icons
 - **Backend:** one Netlify Function (`netlify/functions/api.js`) — plain Node, no framework
@@ -44,7 +46,7 @@ as it will in production. If you prefer not to install the Netlify CLI, run `npm
 ## 2. Project structure
 
 ```
-ai-bug-detective/
+code-vexa/
 ├── index.html                  # meta tags, Open Graph, favicon, fonts
 ├── netlify.toml                # build, SPA redirect, security headers, function timeout
 ├── vite.config.ts              # dev proxy to the function
@@ -322,7 +324,7 @@ netlify deploy --build --prod
   (`/* → /index.html`, 200) so deep links survive a refresh, and security headers.
 - Functions are deployed automatically from `netlify/functions` — no extra service needed. Nothing
   depends on your laptop staying on.
-- Update the placeholder domain `https://ai-bug-detective.netlify.app` in `index.html`,
+- Update the placeholder domain `https://code-vexa.netlify.app` in `index.html`,
   `public/robots.txt`, `public/sitemap.xml` and `VITE_SITE_URL` to your real domain.
 - If you deploy the frontend elsewhere (e.g. Vercel/Cloudflare Pages), point `/api/analyze` at the
   Netlify function URL and add that origin to `ALLOWED_ORIGINS`.
@@ -363,7 +365,7 @@ curl -s -X POST http://localhost:4173/api/analyze -H 'Content-Type: application/
 
 ```bash
 # 1. install
-cd ai-bug-detective
+cd code-vexa
 npm install
 
 # 2. develop (Vite on :5173, function via Netlify CLI on :8888)

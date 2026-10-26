@@ -47,7 +47,7 @@ export function HeroEditorPreview() {
   }
 
   return (
-    <div className="panel overflow-hidden" role="figure" aria-label="Preview of the AI Bug Detective workspace">
+    <div className="panel overflow-hidden" role="figure" aria-label="Preview of the Code Vexa workspace">
       {/* Window chrome */}
       <div className="flex items-center justify-between border-b border-white/[0.06] bg-white/[0.02] px-4 py-2.5">
         <div className="flex items-center gap-1.5" aria-hidden="true">

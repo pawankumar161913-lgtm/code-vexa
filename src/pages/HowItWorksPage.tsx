@@ -32,9 +32,9 @@ const FLOW = [
 
 export function HowItWorksPage() {
   useSeo({
-    title: 'How It Works — AI Bug Detective',
+    title: 'How It Works — Code Vexa',
     description:
-      'How AI Bug Detective validates input, calls the AI model, validates the structured response, and keeps your code out of execution paths.',
+      'How Code Vexa validates input, calls the AI model, validates the structured response, and keeps your code out of execution paths.',
     path: '/how-it-works',
   })
 

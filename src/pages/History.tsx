@@ -8,7 +8,7 @@ import { SeverityBadge } from '../components/SeverityBadge'
 
 export function History() {
   useSeo({
-    title: 'Analysis History — AI Bug Detective',
+    title: 'Analysis History — Code Vexa',
     description: 'Your saved debugging sessions, stored locally in this browser.',
     path: '/history',
     noindex: true,
@@ -24,7 +24,7 @@ export function History() {
 
   function open(entry: HistoryEntry) {
     try {
-      sessionStorage.setItem('abd:reopen:v1', JSON.stringify(entry))
+      sessionStorage.setItem('cvx:reopen:v1', JSON.stringify(entry))
     } catch {
       /* storage may be unavailable; fall back to a plain navigation */
     }

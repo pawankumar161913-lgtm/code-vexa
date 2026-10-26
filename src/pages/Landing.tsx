@@ -27,7 +27,7 @@ import { LANGUAGES } from '../lib/types'
 
 export function Landing() {
   useSeo({
-    title: 'AI Bug Detective — Find the bug. Understand the cause. Fix it faster.',
+    title: 'Code Vexa — Find the bug. Understand the cause. Fix it faster.',
     description:
       'Paste code and an error message, and get the likely cause, the bug location, a corrected snippet, a diff and a step-by-step explanation. Supports JavaScript, TypeScript, Python, Java, C, C++, SQL, PHP, HTML and CSS.',
     path: '/',
@@ -64,7 +64,7 @@ function Hero() {
           </h1>
 
           <p className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-slate-400 sm:text-lg">
-            Paste your code and the error you are seeing. AI Bug Detective identifies the likely bug, explains why it
+            Paste your code and the error you are seeing. Code Vexa identifies the likely bug, explains why it
             happens, shows exactly where it lives, and gives you a corrected snippet with a step-by-step explanation —
             so you understand the fix instead of copy-pasting blindly.
           </p>

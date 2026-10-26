@@ -1,9 +1,9 @@
 {
-  "name": "ai-bug-detective",
+  "name": "code-vexa",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "AI Bug Detective - find the bug, understand the cause, fix it faster.",
+  "description": "Code Vexa - find the bug, understand the cause, fix it faster.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
